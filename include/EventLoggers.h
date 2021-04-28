@@ -30,3 +30,13 @@ class InfoLogger : public Logger {
     std::string handle(const Level &logLevel,
                        const std::string &message) const override;
 };
+
+class LoggerChain {
+  public:
+    LoggerChain();
+
+    handle_ptr head_ = nullptr;
+
+  private:
+    void createChain();
+};

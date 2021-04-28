@@ -12,6 +12,7 @@
 #define LOGGER_H
 
 #include <memory>
+#include <sstream>
 #include <string>
 
 class ILogger;
@@ -22,7 +23,7 @@ enum class Level { FATAL, ERROR, WARNING, LOG_INFO };
 
 class ILogger {
   public:
-    virtual ILogger *setNext(handle_ptr &nextHandle) = 0;
+    virtual const handle_ptr &setNext(handle_ptr nextHandle) = 0;
     virtual std::string handle(const Level &logLevel,
                                const std::string &message) const = 0;
     virtual ~ILogger() = default;
@@ -34,8 +35,19 @@ class Logger : public ILogger {
 
   public:
     Logger() = default;
-    ILogger *setNext(handle_ptr &nextHandle) override;
+    const handle_ptr &setNext(handle_ptr nextHandle) override;
     std::string handle(const Level &logLevel,
                        const std::string &message) const override;
+};
+
+class LogPrinter {
+  public:
+    LogPrinter() = default;
+
+    void readOutput(const std::string &input);
+    std::string printOutput() const;
+
+  private:
+    std::ostringstream output_;
 };
 #endif // !LOGGER_H

@@ -10,9 +10,9 @@
 //		 https://refactoring.guru/design-patterns/chain-of-responsibility/cpp/example
 #include "../include/Logger.h"
 
-ILogger *Logger::setNext(handle_ptr &nextHandle) {
+const handle_ptr &Logger::setNext(handle_ptr nextHandle) {
     this->next_ = std::move(nextHandle);
-    return next_.get();
+    return next_;
 }
 
 std::string Logger::handle(const Level &logLevel,
@@ -20,5 +20,11 @@ std::string Logger::handle(const Level &logLevel,
     if (this->next_) {
         return this->next_->handle(logLevel, message);
     }
-    return {};
+    return "Request not handled.";
 }
+
+void LogPrinter::readOutput(const std::string &input) {
+    output_ << input << std::endl;
+}
+
+std::string LogPrinter::printOutput() const { return output_.str(); }
