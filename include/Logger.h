@@ -11,36 +11,31 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include<memory>
-#include<string>
+#include <memory>
+#include <string>
 
 class ILogger;
 
 using handle_ptr = std::unique_ptr<ILogger>;
 
+enum class Level { FATAL, ERROR, WARNING, LOG_INFO };
+
 class ILogger {
-public:
-	virtual handle_ptr setNext(handle_ptr nextHandle) = 0;
-	virtual std::string handle(const std::string& request) = 0;
-	virtual ~ILogger() = default;
+  public:
+    virtual ILogger *setNext(handle_ptr &nextHandle) = 0;
+    virtual std::string handle(const Level &logLevel,
+                               const std::string &message) const = 0;
+    virtual ~ILogger() = default;
 };
 
 class Logger : public ILogger {
-public:
-	enum class Level {
-		ERROR,
-		WARNING,
-		LOG_INFO,
-		LOG_MESSAGE,
-		DEBUG_INFO,
-		DEBUG_MESSAGE,
-	};
-private:
-	handle_ptr next_ = nullptr;
-public:
-	Logger() = default;
-	handle_ptr setNext(handle_ptr nextHandle) override;
-	std::string handle(const std::string& request) override;
-};
+  private:
+    handle_ptr next_ = nullptr;
 
+  public:
+    Logger() = default;
+    ILogger *setNext(handle_ptr &nextHandle) override;
+    std::string handle(const Level &logLevel,
+                       const std::string &message) const override;
+};
 #endif // !LOGGER_H

@@ -10,20 +10,23 @@
 //		 https://refactoring.guru/design-patterns/chain-of-responsibility/cpp/example
 #include "../include/EventLoggers.h"
 
-std::string FatalLogger::handle(const std::string& request) {
-	//TODO: Write this!!!
-	return "";
+std::string FatalLogger::handle(const Level &logLevel,
+                                const std::string &message) const {
+    // TODO: Write this!!!
+    return "";
 }
 
-std::string ErrorLogger::handle(const std::string& request) {
-		return "";	//TODO: Write this!!!
-
+std::string ErrorLogger::handle(const Level &logLevel,
+                                const std::string &message) const {
+    return ""; // TODO: Write this!!!
 }
 
-std::string WarningLogger::handle(const std::string& request) {
-		return "";	//TODO: Write this!!!
+std::string WarningLogger::handle(const Level &logLevel,
+                                  const std::string &message) const {
+    return ""; // TODO: Write this!!!
 }
 
-std::string InfoLogger::handle(const std::string& request) {
-		return "";	//TODO: Write this!!!
+std::string InfoLogger::handle(const Level &logLevel,
+                               const std::string &message) const {
+    return ""; // TODO: Write this!!!
 }

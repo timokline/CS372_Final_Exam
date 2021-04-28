@@ -11,18 +11,22 @@
 #include "Logger.h"
 
 class FatalLogger : public Logger {
-public:
-	std::string handle(const std::string& request) override;
+  public:
+    std::string handle(const Level &logLevel,
+                       const std::string &message) const override;
 };
 
 class ErrorLogger : public Logger {
-	std::string handle(const std::string& request) override;
+    std::string handle(const Level &logLevel,
+                       const std::string &message) const override;
 };
 
 class WarningLogger : public Logger {
-	std::string handle(const std::string& request) override;
+    std::string handle(const Level &logLevel,
+                       const std::string &message) const override;
 };
 
 class InfoLogger : public Logger {
-	std::string handle(const std::string& request) override;
+    std::string handle(const Level &logLevel,
+                       const std::string &message) const override;
 };
